@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
 public class Neuron
 {
@@ -47,11 +43,22 @@ public class Neuron
         m_Output = System.Math.Tanh(sum);
     }
 
-    public void CalculateError() { }
+    public void CalculateError()
+    {
+        m_Error = m_DesiredOutput - m_Output;
+    }
 
-    public void CalculateBackPropagaredError() { }
+    public void CalculateBackPropagatedError()
+    {
+        m_BackPropagatedError = (1.0 - m_Output * m_Output) * m_Error;
+    }
 
-    public void WeightAdjustement() { }
+    public void WeightAdjustement()
+    {
+        m_Weights[0] += m_LearnRate * m_Bias * m_BackPropagatedError;
+        for (int i = 0; i < m_Inputs.Length; i++)
+            m_Weights[i + 1] += m_LearnRate * m_Inputs[i] * m_BackPropagatedError;
+    }
 
     public void Backward(double[] inputs, double desiredOutput)
     {
@@ -59,7 +66,7 @@ public class Neuron
         m_DesiredOutput = desiredOutput;
         Forward();
         CalculateError();
-        CalculateBackPropagaredError();
+        CalculateBackPropagatedError();
         WeightAdjustement();
     }
 

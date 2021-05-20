@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2912330997861794113}
   - component: {fileID: 7555424865727079839}
   - component: {fileID: 5713083171801837455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

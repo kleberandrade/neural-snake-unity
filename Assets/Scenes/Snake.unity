@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 76171495}
   - component: {fileID: 76171494}
   - component: {fileID: 76171493}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -464,7 +463,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -515,7 +513,7 @@ GameObject:
   - component: {fileID: 620864284}
   - component: {fileID: 620864283}
   - component: {fileID: 620864282}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +558,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -834,7 +831,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f0aa6ea96bb4b1caa22c5e5e7ec59a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UseManualControl: 1
+  m_UseManualControl: 0
+  m_SensorPrefab: {fileID: 4990356453140737461, guid: 3009cb8fd2839401c97904bf40cc5f5a, type: 3}
+  m_SensorAngle: 360
+  m_SensorAngleOffset: 0
+  m_SensorNumber: 8
+  m_SensorHeightOffset: 0.2
+  m_Sensors: []
+  m_UseTrain: 0
+  m_LoadNet: 1
+  m_Filename: net.data
+  m_LearnRate: 0.01
+  m_HiddenLayerAmount: 200
+  m_OutputLayerAmount: 4
+  m_Threshold: 0.5
+  m_BatchSize: 8
+  m_Samples: []
 --- !u!114 &904341568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,7 +903,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1153,7 +1164,7 @@ GameObject:
   - component: {fileID: 1244101624}
   - component: {fileID: 1244101623}
   - component: {fileID: 1244101622}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1198,7 +1209,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1356,7 +1366,7 @@ GameObject:
   - component: {fileID: 1527683076}
   - component: {fileID: 1527683075}
   - component: {fileID: 1527683074}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1401,7 +1411,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

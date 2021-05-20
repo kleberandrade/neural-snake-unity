@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1198553009376664631}
   - component: {fileID: 2225972900631537114}
   - component: {fileID: 3821110782358281265}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Food
   m_TagString: Food
   m_Icon: {fileID: 0}
@@ -53,7 +53,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

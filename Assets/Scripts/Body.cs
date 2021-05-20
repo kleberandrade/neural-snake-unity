@@ -21,8 +21,11 @@ public class Body : MonoBehaviour
 
     public void ChangePosition(Vector3 nextPosition)
     {
-        m_NextBody?.ChangePosition(transform.position);
-        if (m_NextBody && m_FoodEaten) CreateNextBody();
+        if (m_NextBody)
+            m_NextBody.ChangePosition(transform.position);
+        else if (m_FoodEaten)
+            CreateNextBody();
+        
         transform.position = nextPosition;
     }
 

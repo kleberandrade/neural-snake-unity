@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
 public class MultilayerPerceptronNetwork
 {
@@ -77,6 +73,40 @@ public class MultilayerPerceptronNetwork
         return GetOuputs();
     }
 
-    public void CalculateHiddenLayerErrors() { }
-    public void Backward(double[] inputs, double[] desiredOutputs) { }
+    public void CalculateHiddenLayerErrors()
+    {
+        for (int i = 0; i < m_HiddenLayer.Length; i++)
+        {
+            var sum = 0.0;
+            for (int j = 0; j < m_OutputLayer.Length; j++)
+                sum += m_OutputLayer[j].m_BackPropagatedError * m_OutputLayer[j].m_Weights[i + 1];
+
+            m_HiddenLayer[i].m_Error = sum;
+            m_HiddenLayer[i].CalculateBackPropagatedError();
+        }
+    }
+
+    public void Backward(double[] inputs, double[] desiredOutputs)
+    {
+        m_Inputs = inputs;
+        m_DesiredOutputs = desiredOutputs;
+
+        SetInputOnHiddenLayer(inputs);
+        Forward();
+
+        for (int i = 0; i < m_OutputLayer.Length; i++)
+        {
+            m_OutputLayer[i].m_DesiredOutput = desiredOutputs[i];
+            m_OutputLayer[i].CalculateError();
+            m_OutputLayer[i].CalculateBackPropagatedError();
+        }
+
+        CalculateHiddenLayerErrors();
+
+        foreach (var neuron in m_HiddenLayer)
+            neuron.WeightAdjustement();
+
+        foreach (var neuron in m_OutputLayer)
+            neuron.WeightAdjustement();
+    }
 }

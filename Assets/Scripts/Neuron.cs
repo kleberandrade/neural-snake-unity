@@ -24,6 +24,11 @@ public class Neuron
         m_LearnRate = learnRate;
     }
 
+    public void InitWeights(double[] weights)
+    {
+        m_Weights = weights;
+    }
+
     public void RandomWeight()
     {
         m_Weights = new double[m_Inputs.Length + 1];
@@ -39,6 +44,7 @@ public class Neuron
         for (int i = 0; i < m_Inputs.Length; i++)
         {
             sum += m_Weights[i + 1] * m_Inputs[i];
+            //sum += m_Weights[i] * m_Inputs[i];
         }
         m_Output = System.Math.Tanh(sum);
     }

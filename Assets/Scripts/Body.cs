@@ -38,14 +38,15 @@ public class Body : MonoBehaviour
 
     public void Obliterate()
     {
-        StartCoroutine(Obliterating());
-    }
-
-    public IEnumerator Obliterating()
-    {
-        yield return new WaitForEndOfFrame();
-        m_NextBody?.Obliterate();
-        Destroy(gameObject);
+        if (m_NextBody == null)
+        {
+            Destroy(transform.parent.gameObject);
+        }
+        else
+        {
+            m_NextBody.Obliterate();
+            Destroy(gameObject);
+        }
     }
 
     private void OnEnable()

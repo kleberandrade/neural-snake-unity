@@ -22,10 +22,22 @@ public class Snake : MonoBehaviour
     private float m_TimeRate = 0.0f;
     private Vector3 m_Movement = Vector3.right;
 
+    public float m_TimeToKill = 20.0f;
+    private float m_ElapsedTimeToKill = 0.0f;
+    private bool m_Alive = true;
+
     private void Start()
     {
         var body = GetComponent<Rigidbody>();
         body.isKinematic = true;
+    }
+
+    private void Update()
+    {
+        if (m_ElapsedTimeToKill >= m_TimeToKill)
+            Kill();
+
+        m_ElapsedTimeToKill += Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -52,7 +64,14 @@ public class Snake : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Food")) return;
+        Kill();
+    }
 
+    private void Kill()
+    {
+        if (!m_Alive) return;
+
+        m_Alive = false;
         OnDie?.Invoke();
         m_FirstBody.Obliterate();
         Destroy(gameObject);

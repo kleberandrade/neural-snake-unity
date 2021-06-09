@@ -2,15 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[System.Serializable]
-public class DataSet
-{
-    public double[] input;
-    public double[] output;
-}
 
 [RequireComponent(typeof(Snake))]
-public class Brain : MonoBehaviour
+public class NeuralBrain : MonoBehaviour
 {
     [Header("Manual Control")]
     public bool m_UseManualControl;
@@ -23,6 +17,9 @@ public class Brain : MonoBehaviour
     public float m_SensorAngleOffset = 0.0f;
     public int m_SensorNumber = 8;
     public float m_SensorHeightOffset = 0.2f;
+    public float m_FoodSensorDistance = 20.0f;
+    public float m_WallSensorDistance = 5.0f;
+    public float m_BodySensorDistance = 4.0f;
     public List<Sensor> m_Sensors = new List<Sensor>();
 
     [Header("Neural Network")]
@@ -55,6 +52,7 @@ public class Brain : MonoBehaviour
         }
         else
         {
+            Debug.Log($"[SENSORS] {m_Sensors.Count}");
             m_Net = new MultilayerPerceptronNetwork(
                 m_Sensors.Count,
                 m_HiddenLayerAmount,
@@ -76,14 +74,17 @@ public class Brain : MonoBehaviour
 
             var foodSensor = Instantiate(m_SensorPrefab, position, Quaternion.Euler(rotation), transform);
             var foodScript = foodSensor.GetComponent<Sensor>();
+            foodScript.m_MaxDistance = m_FoodSensorDistance;
             foodScript.m_CollisionLayer = 1 << 6;
 
             var wallSensor = Instantiate(m_SensorPrefab, position + height, Quaternion.Euler(rotation), transform);
             var wallScript = wallSensor.GetComponent<Sensor>();
+            wallScript.m_MaxDistance = m_WallSensorDistance;
             wallScript.m_CollisionLayer = 1 << 7;
 
             var snakeSensor = Instantiate(m_SensorPrefab, position - height, Quaternion.Euler(rotation), transform);
             var snakeScript = snakeSensor.GetComponent<Sensor>();
+            snakeScript.m_MaxDistance = m_BodySensorDistance;
             snakeScript.m_CollisionLayer = 1 << 8;
 
             m_Sensors.Add(foodScript);
@@ -100,10 +101,12 @@ public class Brain : MonoBehaviour
 
         m_Net.Calculate(inputs);
 
-        if (!m_UseTrain) return;        
-        var outputs = new double[4] { m_Snake.MoveUp, m_Snake.MoveRight, m_Snake.MoveDown, m_Snake.MoveLeft };
-        var data = new DataSet() { input = inputs, output = outputs };
-        Train(data);
+        if (m_UseTrain)
+        {
+            var outputs = new double[4] { m_Snake.MoveUp, m_Snake.MoveRight, m_Snake.MoveDown, m_Snake.MoveLeft };
+            var data = new DataSet() { input = inputs, output = outputs };
+            Train(data);
+        }
     }
 
     private void NeuralControl()
@@ -117,10 +120,10 @@ public class Brain : MonoBehaviour
 
     private void ManualControl()
     {
-        if (Input.GetKeyDown(KeyCode.W)) m_Snake.MoveUp = 1.0f;
-        if (Input.GetKeyDown(KeyCode.D)) m_Snake.MoveRight = 1.0f;
-        if (Input.GetKeyDown(KeyCode.S)) m_Snake.MoveDown = 1.0f;
-        if (Input.GetKeyDown(KeyCode.A)) m_Snake.MoveLeft = 1.0f;
+        if (Input.GetKeyDown(KeyCode.UpArrow)) m_Snake.MoveUp = 1.0f;
+        if (Input.GetKeyDown(KeyCode.RightArrow)) m_Snake.MoveRight = 1.0f;
+        if (Input.GetKeyDown(KeyCode.DownArrow)) m_Snake.MoveDown = 1.0f;
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) m_Snake.MoveLeft = 1.0f;
     }
 
     private void Update()
@@ -167,8 +170,9 @@ public class Brain : MonoBehaviour
     {
         if (!m_Samples.Contains(data))
         {
+
             m_Samples.Add(data);
-            m_BatchCount++;
+            m_BatchCount++;       
         }
 
         if (m_BatchCount != m_BatchSize) return;

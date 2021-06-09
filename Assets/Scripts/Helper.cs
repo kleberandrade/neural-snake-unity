@@ -2,7 +2,7 @@ public class Helper
 {
     private static System.Random m_Random;
 
-    private static void Initiliaze()
+    private static void Initialize()
     {
         if (m_Random == null)
         {
@@ -13,7 +13,25 @@ public class Helper
 
     public static double Random()
     {
-        Initiliaze();
+        Initialize();
         return m_Random.Next(-10000, 10000) / 10000.0;
+    }
+
+    public static int RandomInt(int max)
+    {
+        Initialize();
+        return m_Random.Next(max);
+    }
+
+    public static int RandomInt(int min, int max)
+    {
+        Initialize();
+        return m_Random.Next(min, max);
+    }
+
+    public static float RandomFloat()
+    {
+        Initialize();
+        return (float)m_Random.NextDouble();
     }
 }

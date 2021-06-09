@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class NeuralGameManager : MonoBehaviour
 {
     public GameObject m_Food;
 

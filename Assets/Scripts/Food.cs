@@ -17,4 +17,20 @@ public class Food : MonoBehaviour
         OnFoodEaten?.Invoke();
         Destroy(gameObject);
     }
+
+    private void OnEnable()
+    {
+        Snake.OnDie += OnDie;
+    }
+
+    private void OnDisable()
+    {
+        Snake.OnDie -= OnDie;
+    }
+
+    private void OnDie()
+    {
+        Destroy(gameObject);
+    }
 }
+

@@ -18,11 +18,11 @@ public class Sensor : MonoBehaviour
         if (Physics.Raycast(origin, direction, out RaycastHit hit, m_MaxDistance, m_CollisionLayer))
         {
             Draw(origin, direction * hit.distance);
-            return Mathf.Clamp01(Vector3.Distance(origin, hit.point) / m_MaxDistance);
+            return Mathf.Clamp01(1.0f - Vector3.Distance(origin, hit.point) / m_MaxDistance);
         }
 
         Draw(origin, direction * m_MaxDistance);
-        return 1.0f;
+        return 0.0f;
     }
 
     public void Draw(Vector3 position, Vector3 direction)

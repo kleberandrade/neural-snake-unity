@@ -1,3 +1,5 @@
+using System;
+
 [System.Serializable]
 public class MultilayerPerceptronNetwork
 {
@@ -30,6 +32,34 @@ public class MultilayerPerceptronNetwork
         }
     }
 
+    public MultilayerPerceptronNetwork(int inputNumber, int hiddenNumber, int outputNumber, double[] weights)
+    {
+        m_HiddenLayer = new Neuron[hiddenNumber];
+        for (int i = 0; i < hiddenNumber; i++)
+        {
+            double[] subWeights = new double[inputNumber + 1];
+            var index = i * subWeights.Length;
+            System.Array.ConstrainedCopy(weights, index, subWeights, 0, subWeights.Length);
+
+            m_HiddenLayer[i] = new Neuron();
+            m_HiddenLayer[i].m_Inputs = new double[inputNumber];
+            m_HiddenLayer[i].InitWeights(subWeights);
+        }
+
+        var startOutputIndex = (inputNumber + 1) * hiddenNumber;
+        m_OutputLayer = new Neuron[outputNumber];
+        for (int i = 0; i < outputNumber; i++)
+        {
+            double[] subWeights = new double[hiddenNumber + 1];
+            var index = startOutputIndex + i * subWeights.Length;
+            System.Array.ConstrainedCopy(weights, index, subWeights, 0, subWeights.Length);
+
+            m_OutputLayer[i] = new Neuron();
+            m_OutputLayer[i].m_Inputs = new double[hiddenNumber];
+            m_OutputLayer[i].InitWeights(subWeights);
+        }
+    }
+
     public void Forward()
     {
         double[] hiddenOutput = new double[m_HiddenLayer.Length];
@@ -39,6 +69,7 @@ public class MultilayerPerceptronNetwork
             hiddenOutput[i] = m_HiddenLayer[i].m_Output;
         }
 
+        
         SetInputOnOuputLayer(hiddenOutput);
         for (int i = 0; i < m_OutputLayer.Length; i++)
         {
